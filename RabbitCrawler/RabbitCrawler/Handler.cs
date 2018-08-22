@@ -72,7 +72,7 @@ namespace RabbitCrawler
            
         }
 
-        public async Task<List<DownLoadInfo>> Execute(Content content, string savePath)
+        public List<DownLoadInfo> Execute(Content content, string savePath)
         {
             List<DownLoadInfo> downList = new List<DownLoadInfo>();
             foreach (var item in content.specialList)

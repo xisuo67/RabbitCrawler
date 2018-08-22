@@ -54,7 +54,7 @@ namespace RabbitCrawler
                 }), s);
 
             };
-            var downLoadInfo=  handle.Execute(content,path).Result;
+            var downLoadInfo=  handle.Execute(content,path);
             var result=  handle.Start(downLoadInfo);
             MessageBox.Show($"{result}","温馨提示");
         }
