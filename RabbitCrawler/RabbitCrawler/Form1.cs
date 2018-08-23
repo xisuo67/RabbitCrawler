@@ -15,6 +15,8 @@ namespace RabbitCrawler
             comboBox1.SelectedIndex = 0;
         }
         private static Content content = new Content();
+
+        private static List<SpecialList> list = new List<SpecialList>();
         private void button2_Click(object sender, EventArgs e)
         {
             var path = textBox1.Text.Trim();
@@ -60,8 +62,7 @@ namespace RabbitCrawler
             }
             else
             {
-                var entity = content.specialList.Where(s=>s.name==downLoadName).ToList();
-                //var downLoadInfo = handle.Execute(entity, path);
+                //var downLoadInfo = handle.Execute(list, path);
                 //var result = handle.Start(downLoadInfo);
                 //MessageBox.Show($"{result}", "温馨提示");
             }
@@ -105,12 +106,7 @@ namespace RabbitCrawler
                     apiResult = JsonConvert.DeserializeAnonymousType(result, apiResult);
                     if (apiResult.msg == "成功")
                     {
-                        int totalCount = 0;
-                        foreach (var item in apiResult.content.specialList)
-                        {
-                            totalCount += item.musicCount;
-                        }
-                        Parm = Parm == "" ? "全部" : Parm;
+                        var totalCount = apiResult.content.specialList.Select(x=>x.musicCount).Aggregate<int>((x,y)=>x+y);
                         content = apiResult?.content;
                         comboBox2.Items.Clear();
                         foreach (var item in content.specialList)
@@ -137,7 +133,10 @@ namespace RabbitCrawler
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            var downLoadName = comboBox2.Text;
+            list = content.specialList.Where(s => s.name == downLoadName).ToList();
+            var count = list.Select(x => x.musicCount).Aggregate<int>((x,y)=>x+y);
+            lab_message.Text = $"共{count}个资源";
         }
     }
 }
