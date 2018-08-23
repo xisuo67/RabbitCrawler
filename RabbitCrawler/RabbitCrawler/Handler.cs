@@ -72,10 +72,10 @@ namespace RabbitCrawler
            
         }
 
-        public List<DownLoadInfo> Execute(Content content, string savePath)
+        public List<DownLoadInfo> Execute(List<SpecialList> specialList, string savePath)
         {
             List<DownLoadInfo> downList = new List<DownLoadInfo>();
-            foreach (var item in content.specialList)
+            foreach (var item in specialList)
             {
                 string url = $"https://cloud.alilo.com.cn/baby/api/t/external/getSpecialInfo?id={item.id}";
 

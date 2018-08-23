@@ -52,9 +52,19 @@ namespace RabbitCrawler
                 }), s);
 
             };
-            var downLoadInfo = handle.Execute(content, path);
-            var result = handle.Start(downLoadInfo);
-            MessageBox.Show($"{result}", "温馨提示");
+            var downLoadName = comboBox2.Text;
+            if (string.IsNullOrEmpty(downLoadName))
+            {
+                MessageBox.Show("请选择要下载的故事","提示");
+                return;
+            }
+            else
+            {
+                var entity = content.specialList.Where(s=>s.name==downLoadName).ToList();
+                //var downLoadInfo = handle.Execute(entity, path);
+                //var result = handle.Start(downLoadInfo);
+                //MessageBox.Show($"{result}", "温馨提示");
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -101,7 +111,6 @@ namespace RabbitCrawler
                             totalCount += item.musicCount;
                         }
                         Parm = Parm == "" ? "全部" : Parm;
-                        //MessageBox.Show($"{Parm}分类下共有{totalCount}个资源","温馨提示");
                         content = apiResult?.content;
                         comboBox2.Items.Clear();
                         foreach (var item in content.specialList)
@@ -124,6 +133,11 @@ namespace RabbitCrawler
         {
             richTextBox1.SelectionStart = richTextBox1.Text.Length; //Set the current caret position at the end
             richTextBox1.ScrollToCaret(); //Now
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
