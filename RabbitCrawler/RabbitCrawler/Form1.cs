@@ -106,7 +106,6 @@ namespace RabbitCrawler
                     apiResult = JsonConvert.DeserializeAnonymousType(result, apiResult);
                     if (apiResult.msg == "成功")
                     {
-                        var totalCount = apiResult.content.specialList.Select(x=>x.musicCount).Aggregate<int>((x,y)=>x+y);
                         content = apiResult?.content;
                         comboBox2.Items.Clear();
                         foreach (var item in content.specialList)
@@ -135,7 +134,7 @@ namespace RabbitCrawler
         {
             var downLoadName = comboBox2.Text;
             list = content.specialList.Where(s => s.name == downLoadName).ToList();
-            var count = list.Select(x => x.musicCount).Aggregate<int>((x,y)=>x+y);
+            var count = list.Select(x => x.musicCount).Sum();
             lab_message.Text = $"共{count}个资源";
         }
     }
