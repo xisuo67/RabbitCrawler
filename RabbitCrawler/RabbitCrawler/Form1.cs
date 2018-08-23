@@ -62,9 +62,9 @@ namespace RabbitCrawler
             }
             else
             {
-                //var downLoadInfo = handle.Execute(list, path);
-                //var result = handle.Start(downLoadInfo);
-                //MessageBox.Show($"{result}", "温馨提示");
+                var downloadinfo = handle.Execute(list, path);
+                var result = handle.Start(downloadinfo);
+                MessageBox.Show($"{result}", "温馨提示");
             }
         }
 
