@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace RabbitCrawler
@@ -18,23 +20,26 @@ namespace RabbitCrawler
             var path = textBox1.Text.Trim();
             if (string.IsNullOrEmpty(path))
             {
-                MessageBox.Show("请先选择文件保存路径","提示");
+                MessageBox.Show("请先选择文件保存路径", "提示");
                 return;
             }
             var index = comboBox1.SelectedIndex;
-            if (index==0)
+            if (index == 0)
             {
-                MessageBox.Show("请选择分类","提示");
+                MessageBox.Show("请选择分类", "提示");
             }
             Handler handle = new Handler();
             handle.OnStart += (s, ev) =>
             {
-                this.Invoke(new MethodInvoker(() => {
+                this.Invoke(new MethodInvoker(() =>
+                {
                     richTextBox1.Text += "开始下载文件，文件地址：" + ev.Uri + "\r\n";
                 }), s);
             };
-            handle.OnError += (s, ev) => {
-                this.Invoke(new MethodInvoker(() => {
+            handle.OnError += (s, ev) =>
+            {
+                this.Invoke(new MethodInvoker(() =>
+                {
                     richTextBox1.Text += $"{ev.Exception.ToString()}【下载出错】，文件：{ev.Uri}未能下载成功，\r\n";
                 }), s);
 
@@ -47,9 +52,9 @@ namespace RabbitCrawler
                 }), s);
 
             };
-            var downLoadInfo=  handle.Execute(content,path);
-            var result=  handle.Start(downLoadInfo);
-            MessageBox.Show($"{result}","温馨提示");
+            var downLoadInfo = handle.Execute(content, path);
+            var result = handle.Start(downLoadInfo);
+            MessageBox.Show($"{result}", "温馨提示");
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -85,10 +90,10 @@ namespace RabbitCrawler
                 case SelectEnum.Sinology:
                 case SelectEnum.Poetry:
                 case SelectEnum.Sleep:
-                     result = HttpClinetHelper.DoPost(url, null);
+                    result = HttpClinetHelper.DoPost(url, null);
                     ApiResult apiResult = new ApiResult();
                     apiResult = JsonConvert.DeserializeAnonymousType(result, apiResult);
-                    if (apiResult.msg=="成功")
+                    if (apiResult.msg == "成功")
                     {
                         int totalCount = 0;
                         foreach (var item in apiResult.content.specialList)
@@ -96,12 +101,18 @@ namespace RabbitCrawler
                             totalCount += item.musicCount;
                         }
                         Parm = Parm == "" ? "全部" : Parm;
-                        MessageBox.Show($"{Parm}分类下共有{totalCount}个资源","温馨提示");
+                        //MessageBox.Show($"{Parm}分类下共有{totalCount}个资源","温馨提示");
                         content = apiResult?.content;
+                        comboBox2.Items.Clear();
+                        foreach (var item in content.specialList)
+                        {
+                            comboBox2.Items.Add(item.name);
+                        }
+                        comboBox2.SelectedIndex = 0;
                     }
                     else
                     {
-                        MessageBox.Show("未能获取需下载的资源，请联系开发人员","提示");
+                        MessageBox.Show("未能获取需下载的资源，请联系开发人员", "提示");
                     }
                     break;
                 default:
