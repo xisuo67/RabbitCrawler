@@ -44,7 +44,8 @@ namespace RabbitCrawler
 
         public static string DoPostTest(string url, object PostData)
         {
-            url = "https://yuudnn.lz-qs.com:6026/lzmh_app_shop_api/api_shop/v1/Tip/getIsGrabTip?timestamp=1539933969&openid=603e9ce494ced0a8f2532189e9d65d66&sign=7f1eab21657618631264d6686930130f";
+            
+            url = "https://yuudnn.lz-qs.com:6026/lzmh_app_shop_api/api_shop/v1/Tip/getIsGrabTip?timestamp=1539935717&openid=603e9ce494ced0a8f2532189e9d65d66&sign=0638b37f41be2d81c9944c9d8df26c63";
             //string postData = "{'body':{'com_id':'1398'},'header':{'type':'2','appVersion':'4.2.0','imei':'1a1018970af071e69a1','operator':'联通','apkName':'com.project.LZMH','appCode':'201808150','andModel':'iPhone SE','netWorkType':'WiFi','sdk':'ios11.4','phoneMac':'88:25:93:a4: 5b: d9'}}";
             var postData = JsonConvert.SerializeObject(PostData);
             try
