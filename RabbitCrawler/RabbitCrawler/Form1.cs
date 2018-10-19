@@ -137,5 +137,18 @@ namespace RabbitCrawler
             var count = list.Select(x => x.musicCount).Sum();
             lab_message.Text = $"共{count}个资源";
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Body body = new Body() {com_id= "1398" };
+            Header header = new Header() { type="2",appVersion= "4.2.0",imei= "1a1018970af071e69a1",Operator= "联通",apkName= "com.project.LZMH",appCode= "201808150",andModel= "iPhone SE" ,netWorkType= "WiFi",sdk= "ios11.4",phoneMac= "88:25:93:a4:5b:d9" };
+            MessageBody message = new MessageBody()
+            {
+                body=body,
+                header=header
+            };
+            string Url = "https://yuudnn.lz-qs.com:6026/lzmh_app_shop_api/api_shop/v1/Tip/getIsGrabTip?timestamp=1539926853&openid=603e9ce494ced0a8f2532189e9d65d66&sign=4c3bc8bf38b24b033f6399e29138864e";
+           var  result = HttpClinetHelper.DoPostTest(Url, message);
+        }
     }
 }

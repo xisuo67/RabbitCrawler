@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiResult.cs" />
+    <Compile Include="Body.cs" />
     <Compile Include="EnumExtension.cs" />
     <Compile Include="Events\OnCompletedEventArgs.cs" />
     <Compile Include="Events\OnErrorEventArgs.cs" />
